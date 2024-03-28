@@ -1,0 +1,22 @@
+<div class="flex justify-between items-center pr-8">
+  <div class="flex-1 flex items-center">
+    <app-favourite-btn *ngIf="category"
+      (voteEmit)="handleVoteEmit($event)"
+      [voteData]="{ contentType: 'category', contentId: category.id }"
+      [condition]="isFavourite()"
+      ></app-favourite-btn>
+    <h1 *ngIf="category" class="font-bold text-3xl flex-1 "> {{category.name}} </h1>
+    <h1 *ngIf="!category" class="font-bold text-3xl flex-1 "> Home </h1>
+  </div>
+  <app-search-bar class="flex-1"></app-search-bar>
+  <div class="flex-1 flex justify-end items-center z-20">
+    <app-dropdown [dropdownItems]="[
+        { label: 'list-separator',  link: '' },
+        { label: 'Create Category', link: '', action: 'createCategory' },
+        { label: 'Create Thread',   link: '', action: 'createThread' }
+    ]"(choice)="handleChoice($event)"><p> Create </p></app-dropdown>
+  </div>
+</div>
+
+<app-create-category *ngIf="choice == 'category'" (close)="handleChoice($event)"></app-create-category>
+<app-create-thread [categoryOptions]="categories" *ngIf="choice == 'thread'" (close)="handleChoice($event)"></app-create-thread>

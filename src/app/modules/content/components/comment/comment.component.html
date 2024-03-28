@@ -1,0 +1,87 @@
+<div class="flex w-full justify-between border rounded-md">
+  <div class="p-3 flex-grow">
+    <div class="flex gap-3 items-center">
+      <img src="https://avatars.githubusercontent.com/u/22263436?v=4"
+        class="object-cover w-10 h-10 rounded-full border-2 border-emerald-400  shadow-emerald-400">
+      <h3 class="font-bold cursor-pointer" (click)="navigateToUser()">
+        &#64;{{comment.user.username}}
+      </h3>
+    </div>
+    <p *ngIf="!isEditing" class="text-gray-600 mt-2">
+      {{comment.content}}
+    </p>
+    <form [formGroup]="updateForm" (ngSubmit)="onUpdateComment()">
+      <textarea *ngIf="isEditing" formControlName="content"
+                class="text-gray-500 italic mt-2 resize-none border-b-2 border-black w-full"
+                rows="1">
+        {{comment.content}}
+      </textarea>
+      <div *ngIf="!isEditing">
+        <button class=" text-blue-500" (click)="toggleCreateReply()">Reply</button>
+        <div *ngIf="isUserComment()" class="pr-1 flex items-center gap-1">
+          <app-update-btn (click)="toggleEditing()"></app-update-btn>
+          <app-delete-btn (click)="toggleConfirmModal()"></app-delete-btn>
+        </div>
+      </div>
+      <div *ngIf="isEditing" class="flex gap-2">
+        <button type="submit"> Submit </button>
+        <button (click)="toggleEditing()"> Cancel </button>
+      </div>
+      <span *ngIf="!content.valid && (content.touched || submit)" class="text-red-600"> Content is required </span>
+    </form>
+  </div>
+  <div class="flex flex-col items-end gap-3 pr-3 py-3">
+    <app-up-vote-btn (voteEmit)="handleVoteEmit($event)" [voteData]="{ contentType: 'comment', contentId: comment.id }"
+      [condition]="isUpVoted()">
+      {{ comment.commentInteractions.upVotes }}
+    </app-up-vote-btn>
+    <app-down-vote-btn (voteEmit)="handleVoteEmit($event)"
+      [voteData]="{ contentType: 'comment', contentId: comment.id }" [condition]="isDownVoted()">
+      {{ comment.commentInteractions.downVotes }}
+    </app-down-vote-btn>
+
+    <p class="text-sm leading-snug text-black truncate mt-2 sm:mb-0"> at {{comment.uploadDate | date : 'HH:mm dd/MM'}}
+    </p>
+  </div>
+</div>
+
+<app-create-reply
+  *ngIf="isCreatingReply"
+  (createReply)="handleCreateReply($event)"
+  [commentId]="comment.id">
+</app-create-reply>
+
+@for (reply of comment.replies; track $index) {
+  <app-comment-reply
+      (deleteReplyEmit)="handleDeleteReply($event)"
+      [reply]="reply">
+  </app-comment-reply>
+}
+
+<div *ngIf="isConfirmModalOpen"
+  class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div class="relative w-auto my-6 mx-auto max-w-6xl">
+    <!--content-->
+    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full
+              bg-white outline-none focus:outline-none min-w-96">
+      <!--header-->
+      <div class="flex items-start justify-between pt-5 px-5 border-b border-solid border-blueGray-200 rounded-t">
+        <h3 class="text-2xl font-semibold">
+          Are you sure you want to delete this comment?
+        </h3>
+        <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-3 float-right text-3xl leading-none
+                font-semibold outline-none focus:outline-none" (click)="toggleConfirmModal()">
+          <img src="/assets/icons/close.svg" class="size-8">
+        </button>
+      </div>
+      <!--footer-->
+      <div class="flex items-center justify-center p-6 border-t border-solid border-blueGray-200 rounded-b">
+        <button class="px-4" (click)="deleteComment()"> Submit </button>
+        <app-cancel-btn class="px-4 bg-red-600 border-black border-2 rounded-md text-white"
+          (click)="toggleConfirmModal()"> Cancel </app-cancel-btn>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isConfirmModalOpen" class="opacity-25 fixed inset-0 z-40 bg-black"></div>

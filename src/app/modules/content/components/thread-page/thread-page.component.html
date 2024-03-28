@@ -1,0 +1,42 @@
+<style>
+  .wh-special{
+    width: calc(100svw - 2rem);
+    min-height: calc(100svh - 8rem);
+  }
+</style>
+
+<div class="wh-special py-20 px-10 mt-20 flex">
+  <div class="flex-grow pr-10 border-r-2 border-black">
+
+    <app-thread [thread]="threadData"></app-thread>
+
+    <div class="rounded-lg border p-1 md:p-3 mt-10">
+      <div class="flex">
+        <h3 class="font-semibold p-1">Discussion</h3>
+        <button class="ml-4 text-blue-500" (click)="toggleCreateComment()"> Comment </button>
+      </div>
+
+      <div class="flex flex-col gap-5 m-3">
+        <app-create-comment
+          *ngIf="isCreatingComment"
+          (createComment)="handleCreateComment($event)"
+          [threadId]="threadData.id">
+        </app-create-comment>
+
+        @for (comment of comments; track $index) {
+          <app-comment (deleteCommentEmit)="handleDeleteComment($event)" [comment]="comment"></app-comment>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="w-64 pl-5">
+    <p> Users participating in discussion </p>
+    @for (participant of discussionParticipants(); track $index) {
+      <p class="cursor-pointer" (click)="navigateToUser(participant.id)"> &#64;{{participant.username}} </p>
+    }
+  </div>
+</div>
+
+
+

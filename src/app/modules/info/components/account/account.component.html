@@ -1,0 +1,213 @@
+<style>
+  .wh-special {
+    width: calc(100svw - 2rem);
+    min-height: calc(100svh - 8rem);
+  }
+</style>
+
+<div class="wh-special mt-28 p-5 flex">
+  <!-- user stats -->
+  <div class="p-5 pr-16 flex-col">
+    <!-- Profile w/setting options -> update email, verifiy email, update username, password, etc -->
+    <div class="flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <img src="https://avatars.githubusercontent.com/u/22263436?v=4"
+          class="object-cover w-10 h-10 rounded-full border-2 border-emerald-400  shadow-emerald-400">
+        <h3 class="font-bold cursor-pointer">
+          &#64;{{user.username}}
+        </h3>
+      </div>
+      <!-- Follow interaction -->
+      <svg *ngIf="!isUserPage()" class="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+        height="24" fill="currentColor" viewBox="0 0 24 24" (click)="handleFollow()">
+        <path *ngIf="!isFollowing()" fill-rule="evenodd"
+          d="M9 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4H7Zm8-1a1 1 0 0 1 1-1h1v-1a1 1 0 1 1 2 0v1h1a1 1 0 1 1 0 2h-1v1a1 1 0 1 1-2 0v-1h-1a1 1 0 0 1-1-1Z"
+          clip-rule="evenodd" />
+        <path *ngIf="isFollowing()" fill-rule="evenodd"
+          d="M5 8a4 4 0 1 1 8 0 4 4 0 0 1-8 0Zm-2 9a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1Zm13-6a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2h-4Z"
+          clip-rule="evenodd" />
+      </svg>
+    </div>
+    <!-- Follower and following count -->
+    <div class="flex justify-around py-2 border-b-2 border-black">
+      <p class="cursor-pointer" (click)="toggleFollowerModal()"> Followers: {{ userStats ? userStats.followers : 0 }} </p>
+      <p class="cursor-pointer" (click)="toggleFollowingModal()"> Following: {{ userStats ? userStats.following : 0 }}</p>
+    </div>
+    <!-- General Stats  -> comments up voted, etc -->
+    <div class="flex flex-col gap-2 mt-5">
+      <div class="flex gap-2 items-center">
+        <svg class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+          height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-width="2"
+            d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z" />
+        </svg>
+        <p> Favourite Categories: {{ userStats ? userStats.favouriteCategories : 0 }} </p>
+      </div>
+      <div class="flex gap-2 items-center">
+        <svg class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+          viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-width="2"
+            d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z" />
+        </svg>
+        <p> Favourite Threads: {{ userStats ? userStats.favouriteThreads : 0 }} </p>
+      </div>
+      <div class="flex gap-2 items-center">
+        <img class="size-5" src="assets/icons/thread.svg">
+        <p> Threads created: {{ userStats ? userStats.createdThreads : 0 }} </p>
+      </div>
+      <div class="flex gap-2 items-center">
+        <img class="size-5" src="assets/icons/thread.svg">
+        <p> Threads up voted: {{ userStats ? userStats.upVotedThreads : 0 }} </p>
+      </div>
+      <div class="flex gap-2 items-center">
+        <img class="size-5" src="assets/icons/thread.svg">
+        <p> Threads down voted: {{ userStats ? userStats.downVotedThreads : 0 }}</p>
+      </div>
+      <div class="flex gap-2 items-center">
+        <svg class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+        height="24" fill="currentColor" viewBox="0 0 24 24">
+        <path fill-rule="evenodd"
+        d="M3.559 4.544c.355-.35.834-.544 1.33-.544H19.11c.496 0 .975.194 1.33.544.356.35.559.829.559 1.331v9.25c0 .502-.203.981-.559 1.331-.355.35-.834.544-1.33.544H15.5l-2.7 3.6a1 1 0 0 1-1.6 0L8.5 17H4.889c-.496 0-.975-.194-1.33-.544A1.868 1.868 0 0 1 3 15.125v-9.25c0-.502.203-.981.559-1.331ZM7.556 7.5a1 1 0 1 0 0 2h8a1 1 0 0 0 0-2h-8Zm0 3.5a1 1 0 1 0 0 2H12a1 1 0 1 0 0-2H7.556Z"
+        clip-rule="evenodd" />
+        </svg>
+        <p> Created Comments: {{ userStats ? userStats.createdComments : 0 }} </p>
+      </div>
+      <div class="flex gap-2 items-center">
+        <svg class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+          fill="currentColor" viewBox="0 0 24 24">
+          <path fill-rule="evenodd"
+            d="M3.559 4.544c.355-.35.834-.544 1.33-.544H19.11c.496 0 .975.194 1.33.544.356.35.559.829.559 1.331v9.25c0 .502-.203.981-.559 1.331-.355.35-.834.544-1.33.544H15.5l-2.7 3.6a1 1 0 0 1-1.6 0L8.5 17H4.889c-.496 0-.975-.194-1.33-.544A1.868 1.868 0 0 1 3 15.125v-9.25c0-.502.203-.981.559-1.331ZM7.556 7.5a1 1 0 1 0 0 2h8a1 1 0 0 0 0-2h-8Zm0 3.5a1 1 0 1 0 0 2H12a1 1 0 1 0 0-2H7.556Z"
+            clip-rule="evenodd" />
+        </svg>
+        <p> Up Voted Comments: {{ userStats ? userStats.upVotedComments : 0 }} </p>
+      </div>
+      <div class="flex gap-2 items-center">
+        <svg class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+          fill="currentColor" viewBox="0 0 24 24">
+          <path fill-rule="evenodd"
+            d="M3.559 4.544c.355-.35.834-.544 1.33-.544H19.11c.496 0 .975.194 1.33.544.356.35.559.829.559 1.331v9.25c0 .502-.203.981-.559 1.331-.355.35-.834.544-1.33.544H15.5l-2.7 3.6a1 1 0 0 1-1.6 0L8.5 17H4.889c-.496 0-.975-.194-1.33-.544A1.868 1.868 0 0 1 3 15.125v-9.25c0-.502.203-.981.559-1.331ZM7.556 7.5a1 1 0 1 0 0 2h8a1 1 0 0 0 0-2h-8Zm0 3.5a1 1 0 1 0 0 2H12a1 1 0 1 0 0-2H7.556Z"
+            clip-rule="evenodd" />
+        </svg>
+        <p> Down Voted Comments: {{ userStats ? userStats.downVotedComments : 0 }} </p>
+      </div>
+    </div>
+  </div>
+  <!-- user creations -->
+  <div class="flex-grow  p-5">
+    <!-- Favourite Threads -> can be toggled to be visible or not -->
+    <div>
+      <p class="border-b-black text-2xl font-semibold border-b-2 border-black pl-5"> Favourite Threads </p>
+      <p *ngIf="favouriteThreads.length == 0" class="pl-2 py-5 font-semibold"> User has no threads to favourite </p>
+      <div *ngIf="threads.length != 0" class="grid grid-cols-2 gap-5 p-5">
+        @for (thread of favouriteThreads; track $index) {
+          <app-thread
+            (deleteThreadEmit)="handleDeleteThread($event)"
+            (favThread)="handleFavouriteThread($event)"
+            [thread]="thread">
+          </app-thread>
+        }
+      </div>
+    </div>
+    <!-- Created Threads -->
+    <div>
+      <p class="border-b-black text-2xl font-semibold border-b-2 border-black pl-5"> Created Threads </p>
+      <p *ngIf="threads.length == 0" class="pl-2 py-5 font-semibold"> User has not created any threads </p>
+      <div *ngIf="threads.length != 0" class="grid grid-cols-2 gap-5 p-5">
+        @for (thread of threads; track $index) {
+          <app-thread
+            (deleteThreadEmit)="handleDeleteThread($event)"
+            (favThread)="handleFavouriteThread($event)"
+            [thread]="thread">
+          </app-thread>
+        }
+        </div>
+    </div>
+    <!-- Added Comments, when clicked it leads to the thread where it was posted -->
+    <div>
+      <p class="border-b-black text-2xl font-semibold border-b-2 border-black pl-5"> Created Comments </p>
+      <p *ngIf="comments.length == 0" class="pl-2 py-5 font-semibold"> User has not created any comments </p>
+      <div *ngIf="comments.length != 0" class="grid grid-cols-2 gap-5 p-5">
+        @for (comment of comments; track $index) {
+          <app-user-comment (deleteCommentEmit)="handleDeleteComment($event)" [comment]="comment" [username]="user.username"></app-user-comment>
+        }
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="isFollowerModalOpen"
+  class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div class="relative w-auto my-6 mx-auto max-w-6xl">
+    <!--content-->
+    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full
+              bg-white outline-none focus:outline-none min-w-96">
+      <!--header-->
+      <div class="flex items-start justify-between pt-5 px-5 border-b border-solid border-blueGray-200 rounded-t">
+        <h3 class="text-2xl font-semibold">
+          Followers
+        </h3>
+        <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-3 float-right text-3xl leading-none
+                font-semibold outline-none focus:outline-none" (click)="toggleFollowerModal()">
+          <img src="/assets/icons/close.svg" class="size-8">
+        </button>
+      </div>
+        <!--body-->
+        <p *ngIf="followers.length == 0" class="pl-10 py-5 font-semibold"> User has no followers </p>
+        <div *ngIf="followers.length != 0" class="grid grid-cols-2 gap-5 p-5 pl-10">
+          @for (follower of followers; track $index) {
+            <div class="flex items-center gap-2" (click)="navigateToUser(follower)">
+              <img src="https://avatars.githubusercontent.com/u/22263436?v=4"
+                class="object-cover w-10 h-10 rounded-full border-2 border-emerald-400  shadow-emerald-400">
+              <h3 class="font-bold cursor-pointer">
+                &#64;{{follower.username}}
+              </h3>
+            </div>
+          }
+        </div>
+        <!--footer-->
+      <div class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+        <app-cancel-btn class="px-4" (click)="toggleFollowerModal()"> Close </app-cancel-btn>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isFollowingModalOpen"
+  class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div class="relative w-auto my-6 mx-auto max-w-6xl">
+    <!--content-->
+    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full
+              bg-white outline-none focus:outline-none min-w-96">
+      <!--header-->
+      <div class="flex items-start justify-between pt-5 px-5 border-b border-solid border-blueGray-200 rounded-t">
+        <h3 class="text-2xl font-semibold">
+          Following
+        </h3>
+        <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-3 float-right text-3xl leading-none
+                font-semibold outline-none focus:outline-none" (click)="toggleFollowingModal()">
+          <img src="/assets/icons/close.svg" class="size-8">
+        </button>
+      </div>
+      <!--body-->
+      <p *ngIf="following.length == 0" class="pl-10 py-5 font-semibold"> User is not following anyone </p>
+      <div *ngIf="following.length != 0" class="grid grid-cols-2 gap-5 p-5 pl-10">
+        @for (follow of following; track $index) {
+          <div class="flex items-center gap-2" (click)="navigateToUser(follow)">
+            <img src="https://avatars.githubusercontent.com/u/22263436?v=4"
+              class="object-cover w-10 h-10 rounded-full border-2 border-emerald-400  shadow-emerald-400">
+            <h3 class="font-bold cursor-pointer">
+              &#64;{{follow.username}}
+            </h3>
+          </div>
+        }
+      </div>
+      <!--footer-->
+      <div class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+        <app-cancel-btn class="px-4" (click)="toggleFollowingModal()"> Close </app-cancel-btn>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isFollowerModalOpen || isFollowingModalOpen" class="opacity-25 fixed inset-0 z-40 bg-black"></div>

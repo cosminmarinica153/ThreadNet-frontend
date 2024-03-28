@@ -22,7 +22,13 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "baseUrl": "./src",
+    "paths": {
+      "@interface/*": ["app/core/models/interfaces/*"],
+      "@apiModel/*": ["app/core/models/api/*"],
+      "@dto/*": ["app/core/models/dto/*"],
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

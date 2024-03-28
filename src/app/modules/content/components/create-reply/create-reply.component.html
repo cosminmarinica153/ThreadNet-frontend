@@ -1,0 +1,12 @@
+<form [formGroup]="replyForm" (ngSubmit)="onCreateReply()">
+  <div class="w-full pl-6 mt-4">
+    <textarea
+      class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-400 focus:outline-none focus:bg-white"
+      formControlName="content" placeholder="Reply" required></textarea>
+    <span class="text-red-600" *ngIf="!content.valid && (content.touched || submit)"> Content is required </span>
+    <div>
+      <app-cancel-btn (click)="cancelCreate()"> Cancel </app-cancel-btn>
+      <app-create-btn class="ml-4"> Post Comment </app-create-btn>
+    </div>
+  </div>
+</form>

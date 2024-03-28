@@ -1,0 +1,17 @@
+<style>
+  .wh-special {
+    width: calc(100svw - 2rem);
+    height: calc(100svh - 8rem);
+  }
+</style>
+
+<div class="px-16 mt-32 grid grid-cols-4 grid-rows-[100px,1fr] gap-2 wh-special">
+  <app-category-header [category]="category" [categories]="categories | async" class="col-span-3"></app-category-header>
+  <div class="row-start-2 col-span-4 grid grid-flow-dense grid-cols-4">
+    <app-thread-list class="col-span-3 mb-32" [threads]="threads()"></app-thread-list>
+    <app-category-list
+        [categories]="categories | async"
+        [popular]="popular | async">
+    </app-category-list>
+  </div>
+</div>

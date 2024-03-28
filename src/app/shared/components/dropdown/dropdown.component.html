@@ -1,0 +1,38 @@
+<div #dropdown class="relative inline-block">
+  <img *ngIf="imgSrc" class="size-12 relative hover:cursor-pointer" src="{{imgSrc}}" (click)="toggleDropdown()">
+  <app-create-btn *ngIf="!imgSrc" (click)="toggleDropdown()"><ng-content></ng-content></app-create-btn>
+  <ul *ngIf="isDropdownOpen"
+      class="absolute mt-2 bg-white border border-gray-300 rounded shadow-md
+             -right-2 -top-4 pt-14 w-fit whitespace-nowrap -z-10">
+    @for (item of dropdownItems; track $index) {
+      @if(item.label == "list-separator"){
+        <div class="h-0.5 w-full bg-black"></div>
+      }
+      @else if(item.label == "Account"){
+        <li><a (click)="goToAccount()" class="block pr-4 pl-10 py-1.5 text-gray-800 text-end"> {{
+            item.label }} </a></li>
+      }
+      @else if (item.action) {
+        @switch (item.action) {
+          @case('createCategory'){
+            <li><button (click)="toggleCategoryModal()" (click)="toggleDropdown()"
+                   class="block pr-4 pl-10 py-1.5 text-gray-800 text-end"
+                   > {{item.label }} </button></li>
+          }
+          @case('createThread'){
+            <li><button (click)="toggleThreadModal()" (click)="toggleDropdown()"
+                   class="block pr-4 pl-10 py-1.5 text-gray-800 text-end"
+                   > {{item.label }} </button></li>
+          }
+          @case('logout'){
+            <li><a (click)="logout()" class="block pr-4 pl-10 py-1.5 text-gray-800 text-end cursor-pointer"> {{item.label}} </a></li>
+          }
+        }
+      }
+      @else {
+        <li><a routerLink="{{item.link}}" (click)="toggleDropdown()"
+               class="block pr-4 pl-10 py-1.5 text-gray-800 text-end"> {{ item.label }} </a></li>
+      }
+    } @empty { Not Implemented }
+  </ul>
+</div>

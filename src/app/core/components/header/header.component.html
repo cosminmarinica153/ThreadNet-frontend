@@ -1,0 +1,23 @@
+<div class="fixed top-0 w-full bg-black flex p-5 justify-between items-center z-50">
+  <a (click)="toHome()"><img class="w-80 h-10 hover:cursor-pointer" src="assets/logo/logo-no-bg.png"></a>
+
+  @switch (isLoggedIn) {
+    @case (false) {
+      <app-dropdown [imgSrc]='imgSrc' [dropdownItems]="[
+        { label: 'About', link:'about' },
+        { label: 'Contact', link:'contact' },
+        { label: 'list-separator', link: ''},
+        { label: 'Login', link:'auth/login' },
+        { label: 'Register', link:'auth/register' },
+      ]"></app-dropdown>}
+    @case (true) {
+      <app-dropdown [imgSrc]='imgSrc' [dropdownItems]="[
+        { label: 'About',          link:'about' },
+        { label: 'Contact',        link:'contact' },
+        { label: 'list-separator', link:'' },
+        { label: 'Account',        link:'' },
+        { label: 'Friends',        link:'#' },
+        { label: 'Logout',         link:'', action: 'logout' },
+      ]"></app-dropdown>}
+  }
+</div>

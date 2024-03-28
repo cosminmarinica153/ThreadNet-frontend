@@ -1,0 +1,6 @@
+<div class="grid grid-cols-2 gap-8 grid-flow-dense">
+  <p *ngIf="threads.length == 0" class="text-2xl font-semibold"> There are no threads for this category </p>
+  @for (thread of threads; track $index){
+    <app-thread [thread]="thread"></app-thread>
+  }
+</div>

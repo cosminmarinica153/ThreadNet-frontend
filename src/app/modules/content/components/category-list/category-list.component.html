@@ -1,0 +1,87 @@
+<ul class="flex flex-col gap-2 max-w-[280px] mx-auto border-l-2 border-blue-500 pl-8 ml-16">
+  <li *ngIf="user != null">
+    <details class="group">
+      <summary class="flex items-center justify-between gap-2 p-2 font-medium marker:content-none hover:cursor-pointer">
+        <span class="flex gap-2">
+          <img class="w-6 h-6 rounded-lg"
+            src="assets/icons/user.png" alt="">
+          <span>
+            &#64;{{user.username}}
+          </span>
+        </span>
+        <svg class="w-5 h-5 text-gray-500 transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="16"
+          height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z">
+          </path>
+        </svg>
+      </summary>
+      <article class="px-4 pb-4">
+        <ul class="flex flex-col gap-4 pl-2 mt-4">
+          <li class="flex gap-2">
+            <img class="size-6" src="assets/icons/thread.svg">
+            <a routerLink="/user/My Threads">
+              My Threads
+            </a>
+          </li>
+          <li class="flex gap-2">
+            <img class="size-6" src="assets/icons/favourite.svg">
+            <a routerLink="/user/Favourite Threads">
+              Favourite Threads
+            </a>
+          </li>
+        </ul>
+      </article>
+    </details>
+  </li>
+  <li>
+    <details class="group">
+      <summary class="flex items-center justify-between gap-2 p-2 font-medium marker:content-none hover:cursor-pointer">
+        <span class="flex gap-2">
+          <img class="size-6" src="assets/icons/trending.svg">
+          <span>
+            Popular Categories
+          </span>
+        </span>
+        <svg class="w-5 h-5 text-gray-500 transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="16"
+          height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z">
+          </path>
+        </svg>
+      </summary>
+      <article class="px-4 pb-4">
+        <ul class="flex flex-col gap-1 pl-2">
+          @for(category of popular; track $index){
+            <li><a (click)="navigateToCategory(category)" class="hover:cursor-pointer"> {{category.name}} </a></li>
+          }
+        </ul>
+      </article>
+    </details>
+  </li>
+  <li>
+    <details class="group">
+      <summary class="flex items-center justify-between gap-2 p-2 font-medium marker:content-none hover:cursor-pointer">
+        <span class="flex gap-2">
+          <img class="size-6" src="assets/icons/category.svg">
+          <span>
+            Categories
+          </span>
+        </span>
+        <svg class="w-5 h-5 text-gray-500 transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="16"
+          height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z">
+          </path>
+        </svg>
+      </summary>
+      <article class="px-4 pb-4">
+        <ul class="flex flex-col gap-1 pl-2">
+          @for(category of categories; track $index){
+            <li><a (click)="navigateToCategory(category)" class="hover:cursor-pointer"> {{category.name}} </a></li>
+          }
+        </ul>
+      </article>
+    </details>
+  </li>
+</ul>
