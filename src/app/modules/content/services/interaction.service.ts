@@ -1,5 +1,6 @@
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FavouriteCategory } from '@apiModel/FavouriteCategory';
 import { FavouriteThread } from '@apiModel/FavouriteThread';
@@ -22,24 +23,32 @@ export class InteractionService {
     throw new Error('Method not implemented.');
   }
 
-  constructor(private http: HttpClient, private authService: AuthentificationService) {}
+  constructor(private http: HttpClient, private authService: AuthentificationService, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   getUserInteractions(): UserInteractions | null{
-    var userInteractions = sessionStorage.getItem('UserInteractions');
-    return userInteractions ? JSON.parse(userInteractions) : null;
+    if(isPlatformBrowser(this.platformId)){
+      var userInteractions = sessionStorage.getItem('UserInteractions');
+      return userInteractions ? JSON.parse(userInteractions) : null;
+    }
+    return null;
   }
 
   getUserCreatedContent(): UserCreatedContent | null{
-    var userCreatedContent = sessionStorage.getItem('UserCreatedContent');
-    return userCreatedContent ? JSON.parse(userCreatedContent) : null;
+    if(isPlatformBrowser(this.platformId)){
+      var userCreatedContent = sessionStorage.getItem('UserCreatedContent');
+      return userCreatedContent ? JSON.parse(userCreatedContent) : null;
+    }
+    return null;
   }
 
   updateUserInteractions(interactions: UserInteractions){
-    sessionStorage.setItem('UserInteractions', JSON.stringify(interactions));
+    if(isPlatformBrowser(this.platformId))
+      sessionStorage.setItem('UserInteractions', JSON.stringify(interactions));
   }
 
   updateUserCreatedContent(userCreatedContent: UserCreatedContent){
-    sessionStorage.setItem('UserCreatedContent', JSON.stringify(userCreatedContent));
+    if(isPlatformBrowser(this.platformId))
+      sessionStorage.setItem('UserCreatedContent', JSON.stringify(userCreatedContent));
   }
 
   getThreadVotes(id: number): Observable<ThreadInteractions> {

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +9,7 @@ import { CoreModule } from './core/core.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ContentModule } from './modules/content/content.module';
 import { InfoModule } from './modules/info/info.module';
+import { HttpClient, HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { InfoModule } from './modules/info/info.module';
     BrowserModule,
     RouterModule,
     AppRoutingModule,
+    HttpClientModule,
 
     CoreModule,
 
@@ -27,7 +29,10 @@ import { InfoModule } from './modules/info/info.module';
     ContentModule,
     InfoModule,
   ],
-  providers: [],
+  providers: [
+    provideClientHydration(),
+    provideHttpClient(withFetch())
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

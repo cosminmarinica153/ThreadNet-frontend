@@ -1,5 +1,6 @@
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Credentials } from '@apiModel/Credentials';
 import { IUser } from '@apiModel/IUser';
 import { CreateUserDto } from '@dto/CreateUserDto';
@@ -11,22 +12,27 @@ import { Observable, catchError, map, of, switchMap, tap, throwError } from 'rxj
 })
 export class AuthentificationService {
 
-constructor(private http: HttpClient) { }
+constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) { }
 
   getUser(): IUser | null{
-    var userData = sessionStorage.getItem('UserData');
-    return userData ? JSON.parse(userData) : null;
+    if(isPlatformBrowser(this.platformId)){
+      var userData = sessionStorage.getItem('UserData');
+      return userData ? JSON.parse(userData) : null;
+    }
+    return null;
   }
   setUser(user: IUser): Observable<boolean>{
     return this.http.get(environment.baseUrl + 'User/getContentInteractions' + user.id).pipe(
       tap(data => {
-        sessionStorage.setItem('UserData', JSON.stringify(user));
-        sessionStorage.setItem('UserInteractions', JSON.stringify(data));
+        if(isPlatformBrowser(this.platformId)){
+          sessionStorage.setItem('UserData', JSON.stringify(user));
+          sessionStorage.setItem('UserInteractions', JSON.stringify(data));
+        }
       }),
       switchMap(() => this.http.get(environment.baseUrl + `User/getCreatedContent${user.id}`)),
       tap(data => {
-        sessionStorage.setItem('UserCreatedContent', JSON.stringify(data));
-        return true;
+        if(isPlatformBrowser(this.platformId))
+          sessionStorage.setItem('UserCreatedContent', JSON.stringify(data));
       }),
       map(() => true)
     );
