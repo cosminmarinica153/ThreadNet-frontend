@@ -36,9 +36,9 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.userService.getUserStats(this.user.id).subscribe({
-    //   next: stats => { this.userStats = stats; }
-    // });
+    this.userService.getUserStats(this.user.id).subscribe({
+      next: stats => { this.userStats = stats; }
+    });
 
     this.userService.getFavouriteThreads(this.user.id).subscribe({
       next: threads => { this.favouriteThreads = threads }
@@ -52,13 +52,13 @@ export class AccountComponent implements OnInit {
       next: comments => { this.comments = comments }
     })
 
-    // this.userService.getFollowers(this.user.id).subscribe({
-    //   next: followers => { this.followers = followers }
-    // })
+    this.userService.getFollowers(this.user.id).subscribe({
+      next: followers => { this.followers = followers }
+    })
 
-    // this.userService.getFollowing(this.user.id).subscribe({
-    //   next: following => { this.following = following }
-    // })
+    this.userService.getFollowing(this.user.id).subscribe({
+      next: following => { this.following = following }
+    })
   }
 
   isFollowerModalOpen: boolean = false;
