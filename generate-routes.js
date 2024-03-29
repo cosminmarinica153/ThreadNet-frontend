@@ -101,6 +101,8 @@ async function main() {
   // console.log("Writing routes to file...");
   writeRoutesToFile(routes);
   // console.log("Done");
+
+  return 0;
 }
 
 // Run the script
