@@ -19,6 +19,7 @@ export class CategoryPageComponent implements OnInit {
 
   category: ICategory;
   title: string = '';
+  searchText: string = '';
 
   userInteractions: UserInteractions | null;
 
@@ -45,8 +46,10 @@ export class CategoryPageComponent implements OnInit {
       tap(data => this.popular = of(data))
     ).subscribe();
 
-
   }
 
+  setSearch(event: any){
+    this.searchText = event['text'];
+  }
 
 }

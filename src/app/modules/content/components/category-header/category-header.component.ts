@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ICategory } from '@apiModel/ICategory';
 import { UserInteractions } from '@apiModel/interactions/UserInteractions';
@@ -14,6 +14,8 @@ export class CategoryHeaderComponent implements OnInit {
   @Input() category!: ICategory;
   @Input() categories: ICategory[] | null= [];
   choice: string = '';
+
+  @Output() search = new EventEmitter<any>();
 
   userInteractions: UserInteractions | null;
 
@@ -41,6 +43,10 @@ export class CategoryHeaderComponent implements OnInit {
       return true;
 
     return false;
+  }
+
+  emitSearch(event: any){
+    this.search.emit({text: event['text']});
   }
 
   handleVoteEmit(event: any){

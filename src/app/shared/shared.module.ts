@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SubmitBtnComponent } from './components/buttons/submit-btn/submit-btn.component';
 import { CancelBtnComponent } from './components/buttons/cancel-btn/cancel-btn.component';
@@ -19,6 +19,7 @@ import { DeleteBtnComponent } from './components/buttons/delete-btn/delete-btn.c
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
+    FormsModule
   ],
   declarations: [
     CreateBtnComponent,

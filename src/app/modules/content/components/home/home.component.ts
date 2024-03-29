@@ -20,6 +20,8 @@ export class HomeComponent implements OnInit {
 
   user!: IUser | null;
 
+  searchText: string = '';
+
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
 
   constructor(private categoryService: CategoryService, private authService: AuthentificationService) {
@@ -36,6 +38,10 @@ export class HomeComponent implements OnInit {
     this.categoryService.getPopular(5).pipe(
       tap(data => this.popular = of(data))
     ).subscribe();
+  }
+
+  setSearch(event: any){
+    this.searchText = event['text'];
   }
 
 }

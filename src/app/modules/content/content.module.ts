@@ -21,6 +21,7 @@ import { CommentComponent } from './components/comment/comment.component';
 import { CommentReplyComponent } from './components/comment-reply/comment-reply.component';
 import { UserCommentComponent } from './components/user-comment/user-comment.component';
 import { UserContentComponent } from './components/user-content/user-content.component';
+import { SearchPipe } from './pipes/search.pipe';
 
 @NgModule({
   imports: [
@@ -50,6 +51,8 @@ import { UserContentComponent } from './components/user-content/user-content.com
     CreateCategoryComponent,
     CreateCommentComponent,
     CreateReplyComponent,
+
+    SearchPipe
   ],
   exports: [
     ThreadComponent,
