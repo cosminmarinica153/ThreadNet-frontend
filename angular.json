@@ -38,7 +38,7 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": ["generate-routes.txt"],
+            "scripts": ["generate-routes.js"],
             "server": "src/main.server.ts",
             "prerender": {
               "routesFile": "routes.txt"

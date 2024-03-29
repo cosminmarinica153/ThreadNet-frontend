@@ -75,7 +75,6 @@ function generateBaseRoutes(){
     routes.push(match[1]);
   }
 
-  return routes;
 }
 
 // Output routes to console
