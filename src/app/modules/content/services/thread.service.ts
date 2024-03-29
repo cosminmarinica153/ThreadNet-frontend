@@ -5,11 +5,12 @@ import { IThread } from '@apiModel/IThread';
 import { IUser } from '@apiModel/IUser';
 import { CreateThreadDto } from '@dto/CreateThreadDto';
 import { environment } from 'environments/environment';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop'
 import { InteractionService } from './interaction.service';
 import { CommentService } from './comment.service';
 import { UpdateThreadDto } from '@dto/UpdateThreadDto';
+import { ICategory } from '@apiModel/ICategory';
 
 @Injectable({
   providedIn: 'root'

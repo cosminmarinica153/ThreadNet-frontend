@@ -52,6 +52,7 @@ export class CommentComponent implements OnInit {
   }
 
   onUpdateComment(){
+    console.log('update comment')
     this.submit = true;
 
     if(!this.updateForm.valid)
@@ -93,6 +94,7 @@ export class CommentComponent implements OnInit {
   }
 
   toggleEditing(){
+    console.log('toggle');
     this.isEditing = !this.isEditing;
   }
   toggleConfirmModal(){

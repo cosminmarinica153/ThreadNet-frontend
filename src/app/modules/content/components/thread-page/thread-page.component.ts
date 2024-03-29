@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { IComment } from '@apiModel/IComment';
 import { IThread } from '@apiModel/IThread';
 import { IUser } from '@apiModel/IUser';
-import { Observable, tap } from 'rxjs';
+import { Observable, finalize, map, of, tap } from 'rxjs';
 import { AuthentificationService } from 'app/modules/auth/authentification.service';
 import { UserInteractions } from '@apiModel/interactions/UserInteractions';
 import { ThreadService } from '../../services/thread.service';

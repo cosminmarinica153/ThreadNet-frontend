@@ -5,7 +5,7 @@ import { ICategory } from '@apiModel/ICategory';
 import { IThread } from '@apiModel/IThread';
 import { CreateCategoryDto } from '@dto/CreateCategoryDto';
 import { environment } from 'environments/environment';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
