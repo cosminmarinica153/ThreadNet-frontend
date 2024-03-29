@@ -1,19 +1,13 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit, Signal, computed, effect, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, Signal, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { IComment } from '@apiModel/IComment';
 import { IThread } from '@apiModel/IThread';
 import { IUser } from '@apiModel/IUser';
-import { CommentInteractions } from '@apiModel/interactions/CommentInteractions';
-import { Observable, finalize, map, of, tap } from 'rxjs';
-import { InteractionService } from '../../services/interaction.service';
-import { CommentReplyInteractions } from '@apiModel/interactions/CommentReplyInteractions';
+import { Observable, tap } from 'rxjs';
 import { AuthentificationService } from 'app/modules/auth/authentification.service';
 import { UserInteractions } from '@apiModel/interactions/UserInteractions';
-import { ICommentReply } from '@apiModel/ICommentReply';
 import { ThreadService } from '../../services/thread.service';
-import { CommentService } from '../../services/comment.service';
 import { UserService } from 'app/modules/info/user.service';
-import { ContentUser } from '@apiModel/ContentUser';
 
 @Component({
   selector: 'app-thread-page',
