@@ -4,13 +4,13 @@
   @switch (isLoggedIn) {
     @case (false) {
       <app-dropdown [imgSrc]='imgSrc' [dropdownItems]="[
-        { label: 'About', link:'about' },
+        { label: 'About',          link:'about' },
         { label: 'list-separator', link: ''},
-        { label: 'Login', link:'auth/login' },
-        { label: 'Register', link:'auth/register' },
+        { label: 'Login',          link:'auth/login' },
+        { label: 'Register',       link:'auth/register' },
       ]"></app-dropdown>}
     @case (true) {
-      <app-dropdown [imgSrc]='imgSrc' [dropdownItems]="[
+      <app-dropdown (logoutAction)="logout()" [imgSrc]='imgSrc' [dropdownItems]="[
         { label: 'About',          link:'about' },
         { label: 'list-separator', link:'' },
         { label: 'Account',        link:'' },

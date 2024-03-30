@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
           next: () => {
             this.submit = false;
 
-            this.router.navigate(['/'], {skipLocationChange: true}).then(() => { location.reload() });
+            this.router.navigate(['/']).then(() => { location.reload() });
           }
         });
       },

@@ -21,7 +21,9 @@ export class CategoryListComponent implements OnInit {
   }
 
   navigateToCategory(category: ICategory){
-    this.router.navigate(['category', category.name], { state: { categoryData: category } })
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['category', category.name], { state: { categoryData: category } })
+    })
   }
 
 }

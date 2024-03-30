@@ -22,4 +22,8 @@ export class HeaderComponent implements OnInit {
 
   toHome(){ this.router.navigate(['/']); }
 
+  logout(){
+    location.reload();
+  }
+
 }

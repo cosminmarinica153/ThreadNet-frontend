@@ -14,6 +14,7 @@ export class DropdownComponent implements OnInit {
   @Input() dropdownItems: DropdownItem[] = [];
   @ViewChild('dropdown') dropdown: ElementRef | undefined;
   @Output() choice = new EventEmitter<any>();
+  @Output() logoutAction = new EventEmitter<any>();
 
   isDropdownOpen: boolean = false;
   isCategoryModalOpen: boolean = false;
@@ -41,7 +42,7 @@ export class DropdownComponent implements OnInit {
   logout(){
     this.authService.logout();
 
-    location.reload();
+    this.logoutAction.emit();
   }
 
   goToAccount(){

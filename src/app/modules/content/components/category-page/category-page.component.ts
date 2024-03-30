@@ -1,4 +1,4 @@
-import { Component, OnInit, Signal, inject } from '@angular/core';
+import { Component, Input, OnInit, Signal, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ICategory } from '@apiModel/ICategory';
 import { IThread } from '@apiModel/IThread';
@@ -18,7 +18,7 @@ export class CategoryPageComponent implements OnInit {
   threads: Signal<IThread[]>;
 
   category: ICategory;
-  title: string = '';
+@Input()  title: string = '';
   searchText: string = '';
 
   userInteractions: UserInteractions | null;
