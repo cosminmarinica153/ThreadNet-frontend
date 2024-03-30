@@ -52,7 +52,7 @@
     <!-- Card footer -->
     <span *ngIf="!updateForm.valid && (content.touched || title.touched || submit)" class="text-red-600"> Title and content required </span>
     <div class="w-full sm:flex justify-between items-center">
-      <p class="text-sm leading-snug text-gray-50 truncate mt-2 sm:mb-0" (click)="navigateToUser()"> By &#64;{{thread.user.username}} </p>
+      <p class="text-sm leading-snug text-gray-50 truncate mt-2 sm:mb-0 cursor-pointer" (click)="navigateToUser()"> By &#64;{{thread.user.username}} </p>
       <p class="text-sm leading-snug text-gray-50 truncate mt-2 sm:mb-0"> at {{thread.uploadDate | date : 'HH:mm dd/MM'}} </p>
     </div>
   </div>

@@ -21,9 +21,7 @@ export class CategoryListComponent implements OnInit {
   }
 
   navigateToCategory(category: ICategory){
-    this.router.navigate(['category', category.name], { state: { categoryData: category } }).then(() => {
-      window.location.reload();
-    });
+    this.router.navigate(['category', category.name], { state: { categoryData: category } })
   }
 
 }
