@@ -18,6 +18,10 @@ export class CategoryService {
     return this.http.get<ICategory[]>(environment.baseUrl + "Category/getAll");
   }
 
+  getByName(name: string): Observable<ICategory>{
+    return this.http.get<ICategory>(environment.baseUrl + "Category/getByName" + name);
+  }
+
   getThreads(id: number): Observable<IThread[]>{
     return this.http.get<IThread[]>(environment.baseUrl + `Category/getThreads${id}`);
   }

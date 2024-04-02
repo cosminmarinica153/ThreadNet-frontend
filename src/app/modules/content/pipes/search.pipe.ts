@@ -6,7 +6,10 @@ import { IThread } from '@apiModel/IThread';
 })
 export class SearchPipe implements PipeTransform {
 
-  transform(items: IThread[], searchText: string): IThread[] {
+  transform(items: IThread[] | null, searchText: string): IThread[] {
+    if(items == null)
+      return [];
+
     if (!items || !searchText) {
       return items;
     }

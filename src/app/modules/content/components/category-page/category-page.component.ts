@@ -15,9 +15,9 @@ import { UserInteractions } from '@apiModel/interactions/UserInteractions';
 export class CategoryPageComponent implements OnInit {
   categories: Observable<ICategory[] | null> = of(null);
   popular: Observable<ICategory[] | null> = of(null);
-  threads: Signal<IThread[]>;
+  threads: Observable<IThread[] | null> = of(null);
 
-  category: ICategory;
+  category!: ICategory;
 @Input()  title: string = '';
   searchText: string = '';
 
@@ -26,26 +26,33 @@ export class CategoryPageComponent implements OnInit {
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
 
   constructor(private categoryService: CategoryService, private interactionService: InteractionService) {
-    this.category = window.history.state.categoryData;
-
-    this.threads = inject(CategoryService).getThreadsSignal(this.category.id);
-
-    this.userInteractions = interactionService.getUserInteractions();
-  }
-
-  ngOnInit() {
     this.route.params.subscribe(params => {
       this.title = params['categoryName'];
     });
+
+    this.categoryService.getByName(this.title).subscribe({
+      next: category => {
+        this.category = category;
+
+        this.categoryService.getThreads(category.id).subscribe({
+          next: data => this.threads = of(data)
+        })
+      }
+    })
+
+
+    this.userInteractions = interactionService.getUserInteractions();
 
     this.categoryService.getAll().pipe(
       tap(data => this.categories = of(data))
     ).subscribe();
 
     this.categoryService.getPopular(5).pipe(
-      tap(data => this.popular = of(data))
+        tap(data => this.popular = of(data))
     ).subscribe();
+  }
 
+  ngOnInit() {
   }
 
   setSearch(event: any){

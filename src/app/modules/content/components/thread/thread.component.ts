@@ -149,13 +149,13 @@ export class ThreadComponent implements OnInit {
   }
 
   navigateToThread(){
-    this.router.navigate(['thread', this.thread.title], { state: { threadData: this.thread } });
+    this.router.navigate(['thread', this.thread.id, this.thread.title]);
   }
 
   navigateToUser(){
     this.userService.getUser(this.thread.user.id).subscribe({
       next: user => {
-        this.router.navigate(['user', user.username], { state: { userData: user } })
+        this.router.navigate(['user', user.id, user.username])
       }
     })
   }

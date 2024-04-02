@@ -5,13 +5,21 @@
   }
 </style>
 
-<div class="wh-special mt-28 p-5 flex">
+<div *ngIf="!isLoaded" class="flex justify-center items-center h-screen">
+  <div class="relative inline-flex">
+    <div class="w-8 h-8 bg-blue-500 rounded-full"></div>
+    <div class="w-8 h-8 bg-blue-500 rounded-full absolute top-0 left-0 animate-ping"></div>
+    <div class="w-8 h-8 bg-blue-500 rounded-full absolute top-0 left-0 animate-pulse"></div>
+  </div>
+</div>
+
+<div *ngIf="isLoaded" class="wh-special mt-28 p-5 flex">
   <!-- user stats -->
   <div class="p-5 pr-16 flex-col">
     <!-- Profile w/setting options -> update email, verifiy email, update username, password, etc -->
     <div class="flex justify-between items-center">
       <div class="flex items-center gap-2">
-        <img src="assets/logo/logo-no-bg.png"
+        <img src="assets/icons/user.png"
           class="object-cover w-10 h-10 rounded-full border-2 border-emerald-400  shadow-emerald-400">
         <h3 class="font-bold cursor-pointer">
           &#64;{{user.username}}

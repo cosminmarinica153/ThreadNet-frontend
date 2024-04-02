@@ -1,5 +1,5 @@
 import { Component, OnInit, Signal, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IComment } from '@apiModel/IComment';
 import { IThread } from '@apiModel/IThread';
 import { IUser } from '@apiModel/IUser';
@@ -15,31 +15,45 @@ import { UserService } from 'app/modules/info/user.service';
   styleUrls: ['./thread-page.component.css']
 })
 export class ThreadPageComponent implements OnInit {
-  comments$: Observable<IComment[]>;
+  comments$!: Observable<IComment[]>;
 
+  isLoaded: boolean = false;
+
+  threadId!: number;
   threadData!: IThread;
   comments: IComment[] = [];
-  discussionParticipants!: Signal<IUser[]>;
+  discussionParticipants!: Observable<IUser[]>;
 
   userInteractions!: UserInteractions | null;
 
   isCreatingComment: Boolean = false;
 
-  constructor(private router: Router, private threadService: ThreadService,
+  constructor(private router: Router, private threadService: ThreadService, private route: ActivatedRoute,
               private authService: AuthentificationService, private userService: UserService) {
-      this.threadData = window.history.state.threadData;
+      this.route.params.subscribe(params => {
+        this.threadId = params['threadId'];
+      });
 
-      this.comments$ = this.threadService.getThreadComments(this.threadData.id).pipe(
-        tap(comments => { return comments })
-      );
+      this.threadService.getOne(this.threadId).subscribe({
+        next: thread => {
+          this.threadData = thread;
 
-      this.comments$.subscribe({
-        next: comments => {
-          this.comments = comments;
-        }
-      })
+          this.comments$ = this.threadService.getThreadComments(thread.id).pipe(
+            tap(comments => { return comments })
+          );
 
-      this.discussionParticipants = inject(ThreadService).getDiscussionPartipantsSignal(this.threadData.id);
+          this.comments$.subscribe({
+            next: comments => {
+              this.comments = comments;
+            }
+          })
+
+          this.threadService.getDiscussionParticipants(thread.id).subscribe({
+            next: participants => this.discussionParticipants = of(participants)
+          })
+        },
+        complete: () => this.isLoaded = true
+      });
   }
 
   ngOnInit() {}
@@ -47,7 +61,7 @@ export class ThreadPageComponent implements OnInit {
   navigateToUser(userId: number){
     this.userService.getUser(userId).subscribe({
       next: user => {
-        this.router.navigate(['user', user.username], { state: { userData: user } })
+        this.router.navigate(['user', user.id, user.username])
       }
     })
   }

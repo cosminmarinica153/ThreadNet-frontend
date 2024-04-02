@@ -32,7 +32,6 @@ export class UserContentComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.categoryService.getAll().pipe(
       tap(data => this.categories = of(data))
     ).subscribe();

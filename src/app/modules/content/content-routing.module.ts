@@ -11,16 +11,14 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    // resolve: { homeData: HomeResolver }
   },
   {
     path: 'category/:categoryName',
     component: CategoryPageComponent,
   },
   {
-    path: 'thread/:threadTitle',
+    path: 'thread/:threadId/:threadTitle',
     component: ThreadPageComponent,
-    // resolve: { threadData: ThreadResolver },
   },
   {
     path: 'user/Favourite Threads',

@@ -8,7 +8,7 @@ import { UserComment } from '@apiModel/UserComment';
 import { UserInteractions } from '@apiModel/interactions/UserInteractions';
 import { AuthentificationService } from 'app/modules/auth/authentification.service';
 import { InteractionService } from 'app/modules/content/services/interaction.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ThreadService } from 'app/modules/content/services/thread.service';
 
 @Component({
@@ -17,8 +17,11 @@ import { ThreadService } from 'app/modules/content/services/thread.service';
   styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit {
-  user: IUser;
+  user!: IUser;
   userStats!: UserStats;
+  userId!: number;
+
+  isLoaded: boolean = false;
 
   userInteractions: UserInteractions | null;
 
@@ -29,37 +32,47 @@ export class AccountComponent implements OnInit {
   threads: IThread[] = [];
   comments: UserComment[] = [];
 
-  constructor(private userService: UserService, private interactionService: InteractionService,
+  constructor(private userService: UserService, private interactionService: InteractionService, private route: ActivatedRoute,
               private authService: AuthentificationService, private router: Router, private threadService: ThreadService) {
-    this.user = window.history.state.userData;
-    this.userInteractions = this.interactionService.getUserInteractions();
+      this.route.params.subscribe(params => {
+        this.userId = params['userId'];
+      });
+
+      this.userService.getUser(this.userId).subscribe({
+        next: user => {
+          this.user = user;
+
+          this.userService.getUserStats(this.user.id).subscribe({
+            next: stats => { this.userStats = stats; }
+          });
+
+          this.userService.getFavouriteThreads(this.user.id).subscribe({
+            next: threads => { this.favouriteThreads = threads }
+          })
+
+          this.userService.getUserThreads(this.user.id).subscribe({
+            next: threads => { this.threads = threads; }
+          })
+
+          this.userService.getUserComments(this.user.id).subscribe({
+            next: comments => { this.comments = comments }
+          })
+
+          this.userService.getFollowers(this.user.id).subscribe({
+            next: followers => { this.followers = followers }
+          })
+
+          this.userService.getFollowing(this.user.id).subscribe({
+            next: following => { this.following = following }
+          })
+        },
+        complete: () => this.isLoaded = true
+      })
+
+      this.userInteractions = this.interactionService.getUserInteractions();
   }
 
-  ngOnInit() {
-    this.userService.getUserStats(this.user.id).subscribe({
-      next: stats => { this.userStats = stats; }
-    });
-
-    this.userService.getFavouriteThreads(this.user.id).subscribe({
-      next: threads => { this.favouriteThreads = threads }
-    })
-
-    this.userService.getUserThreads(this.user.id).subscribe({
-      next: threads => { this.threads = threads; }
-    })
-
-    this.userService.getUserComments(this.user.id).subscribe({
-      next: comments => { this.comments = comments }
-    })
-
-    this.userService.getFollowers(this.user.id).subscribe({
-      next: followers => { this.followers = followers }
-    })
-
-    this.userService.getFollowing(this.user.id).subscribe({
-      next: following => { this.following = following }
-    })
-  }
+  ngOnInit() {}
 
   isFollowerModalOpen: boolean = false;
   isFollowingModalOpen: boolean = false;

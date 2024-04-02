@@ -89,7 +89,7 @@ export class CommentReplyComponent implements OnInit {
   navigateToUser(){
     this.userService.getUser(this.reply.user.id).subscribe({
       next: user => {
-        this.router.navigate(['user', user.username], { state: { userData: user } })
+        this.router.navigate(['user', user.id, user.username])
       }
     })
   }

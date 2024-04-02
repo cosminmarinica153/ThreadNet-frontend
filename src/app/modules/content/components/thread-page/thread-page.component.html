@@ -5,7 +5,15 @@
   }
 </style>
 
-<div class="wh-special py-20 px-10 mt-20 flex">
+<div *ngIf="!isLoaded" class="flex justify-center items-center h-screen">
+  <div class="relative inline-flex">
+    <div class="w-8 h-8 bg-blue-500 rounded-full"></div>
+    <div class="w-8 h-8 bg-blue-500 rounded-full absolute top-0 left-0 animate-ping"></div>
+    <div class="w-8 h-8 bg-blue-500 rounded-full absolute top-0 left-0 animate-pulse"></div>
+  </div>
+</div>
+
+<div *ngIf="isLoaded" class="wh-special py-20 px-10 mt-20 flex">
   <div class="flex-grow pr-10 border-r-2 border-black">
 
     <app-thread [thread]="threadData"></app-thread>
@@ -32,7 +40,7 @@
 
   <div class="w-64 pl-5">
     <p> Users participating in discussion </p>
-    @for (participant of discussionParticipants(); track $index) {
+    @for (participant of discussionParticipants | async; track $index) {
       <p class="cursor-pointer" (click)="navigateToUser(participant.id)"> &#64;{{participant.username}} </p>
     }
   </div>

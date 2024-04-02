@@ -8,7 +8,7 @@
 <div class="px-16 mt-32 grid grid-cols-4 grid-rows-[100px,1fr] gap-2 wh-special">
   <app-category-header (search)="setSearch($event)" [category]="category" [categories]="categories | async" class="col-span-3"></app-category-header>
   <div class="row-start-2 col-span-4 grid grid-flow-dense grid-cols-4">
-    <app-thread-list class="col-span-3 mb-32" [threads]="threads() | search: searchText"></app-thread-list>
+    <app-thread-list class="col-span-3 mb-32" [threads]="threads | async | search: searchText"></app-thread-list>
     <app-category-list
         [categories]="categories | async"
         [popular]="popular | async">

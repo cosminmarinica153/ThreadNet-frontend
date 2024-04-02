@@ -45,7 +45,7 @@ export class UserCommentComponent implements OnInit {
   navigateToThread(){
     this.threadService.getOne(this.comment.threadId).subscribe({
       next: thread => {
-        this.router.navigate(['thread', thread.title], { state: { threadData: thread } });
+        this.router.navigate(['thread', thread.id, thread.title]);
       }
     })
   }

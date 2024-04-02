@@ -40,6 +40,8 @@ export class DropdownComponent implements OnInit {
   }
 
   logout(){
+    this.isDropdownOpen = false;
+
     this.authService.logout();
 
     this.logoutAction.emit();
