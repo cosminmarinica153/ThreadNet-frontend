@@ -80,7 +80,7 @@ export class CreateThreadComponent implements OnInit {
           this.interactionService.updateUserCreatedContent(this.userCreatedContent);
         }
 
-        this.router.navigate(['thread', thread.title], { state: { threadData: thread } })
+        this.router.navigate(['thread', thread.id, thread.title])
       }
     });
   }

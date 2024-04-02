@@ -9,8 +9,7 @@ import { CoreModule } from './core/core.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ContentModule } from './modules/content/content.module';
 import { InfoModule } from './modules/info/info.module';
-import { HttpClient, HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
-
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -35,4 +34,5 @@ import { HttpClient, HttpClientModule, provideHttpClient, withFetch } from '@ang
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+
+export class AppModule {}

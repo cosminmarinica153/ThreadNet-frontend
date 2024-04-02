@@ -47,9 +47,7 @@ export class CreateCategoryComponent implements OnInit {
         if(category != null){
           this.closeModal();
 
-          this.router.navigate(['category', category.name], { state: { categoryData: category } }).then(() => {
-            window.location.reload();
-          });
+          this.router.navigate(['category', category.name])
         }
       },
       error: error => {
