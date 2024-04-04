@@ -5,14 +5,15 @@ import { Credentials } from '@apiModel/Credentials';
 import { IUser } from '@apiModel/IUser';
 import { CreateUserDto } from '@dto/CreateUserDto';
 import { environment } from 'environments/environment';
-import { Observable, catchError, map, of, switchMap, tap, throwError } from 'rxjs';
+import { Observable, catchError, map, switchMap, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthentificationService {
+  url: string = environment.baseUrl;
 
-constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) { }
+constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   getUser(): IUser | null{
     if(isPlatformBrowser(this.platformId)){
@@ -22,14 +23,14 @@ constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: O
     return null;
   }
   setUser(user: IUser): Observable<boolean>{
-    return this.http.get(environment.baseUrl + 'User/getContentInteractions' + user.id).pipe(
+    return this.http.get(this.url + 'User/getContentInteractions' + user.id).pipe(
       tap(data => {
         if(isPlatformBrowser(this.platformId)){
           sessionStorage.setItem('UserData', JSON.stringify(user));
           sessionStorage.setItem('UserInteractions', JSON.stringify(data));
         }
       }),
-      switchMap(() => this.http.get(environment.baseUrl + `User/getCreatedContent${user.id}`)),
+      switchMap(() => this.http.get(this.url + `User/getCreatedContent${user.id}`)),
       tap(data => {
         if(isPlatformBrowser(this.platformId))
           sessionStorage.setItem('UserCreatedContent', JSON.stringify(data));
@@ -39,7 +40,7 @@ constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: O
   }
 
   registerUser(userData: CreateUserDto): Observable<boolean>{
-    return this.http.post(environment.baseUrl + 'User/createUser', userData, { responseType: 'text' }).pipe(
+    return this.http.post(this.url + 'User/createUser', userData, { responseType: 'text' }).pipe(
       map(data => {return data != null}),
       catchError(error => {
         if(error.status === 404)
@@ -51,7 +52,7 @@ constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: O
   }
 
   loginUser(credentials: Credentials): Observable<any>{
-    return this.http.post(environment.baseUrl + 'Auth/login', credentials).pipe(
+    return this.http.post(this.url + 'Auth/login', credentials).pipe(
       map(data => {return data}),
       catchError(error => {
             if (error.status === 404)

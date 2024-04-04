@@ -3,7 +3,6 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { CreateUserDto } from '@dto/CreateUserDto';
 import { AuthentificationService } from '../../authentification.service';
 import { Router } from '@angular/router';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-register',

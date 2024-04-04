@@ -5,33 +5,34 @@ import { ICategory } from '@apiModel/ICategory';
 import { IThread } from '@apiModel/IThread';
 import { CreateCategoryDto } from '@dto/CreateCategoryDto';
 import { environment } from 'environments/environment';
-import { BehaviorSubject, Observable, catchError, map, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
+  url: string = environment.baseUrl;
 
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<ICategory[]>{
-    return this.http.get<ICategory[]>(environment.baseUrl + "Category/getAll");
+    return this.http.get<ICategory[]>(this.url + "Category/getAll");
   }
 
   getByName(name: string): Observable<ICategory>{
-    return this.http.get<ICategory>(environment.baseUrl + "Category/getByName" + name);
+    return this.http.get<ICategory>(this.url + "Category/getByName" + name);
   }
 
   getThreads(id: number): Observable<IThread[]>{
-    return this.http.get<IThread[]>(environment.baseUrl + `Category/getThreads${id}`);
+    return this.http.get<IThread[]>(this.url + `Category/getThreads${id}`);
   }
 
   getPopular(count: number): Observable<ICategory[]>{
-    return this.http.get<ICategory[]>(environment.baseUrl + `Category/getTopCategories${count}`);
+    return this.http.get<ICategory[]>(this.url + `Category/getTopCategories${count}`);
   }
 
   postCategory(category: CreateCategoryDto): Observable<ICategory> {
-    return this.http.post<ICategory>(environment.baseUrl + "Category/createCategory", category).pipe(
+    return this.http.post<ICategory>(this.url + "Category/createCategory", category).pipe(
       map(data => {return data}),
       catchError(error => {
             if (error.status === 404)

@@ -3,9 +3,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AuthentificationService } from '../../authentification.service';
 import { Router } from '@angular/router';
 import { Credentials } from '@apiModel/Credentials';
-import { map } from 'rxjs';
-import { environment } from 'environments/environment';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +21,7 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password') as FormControl;
   }
 
-  constructor(private fb: FormBuilder, private authService: AuthentificationService, private router: Router, private http: HttpClient) { }
+  constructor(private fb: FormBuilder, private authService: AuthentificationService, private router: Router) { }
 
   ngOnInit() {
     this.createForm();

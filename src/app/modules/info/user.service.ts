@@ -13,42 +13,43 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
+  url: string = environment.baseUrl;
 
 constructor(private http: HttpClient) { }
 
   getUser(id: number): Observable<IUser>{
-    return this.http.get<IUser>(environment.baseUrl + `User/getOne${id}`);
+    return this.http.get<IUser>(this.url + `User/getOne${id}`);
   }
 
   getUserStats(id: number): Observable<UserStats>{
-    return this.http.get<UserStats>(environment.baseUrl + `User/getInteractions${id}`);
+    return this.http.get<UserStats>(this.url + `User/getInteractions${id}`);
   }
 
   getFavouriteThreads(id: number): Observable<IThread[]>{
-    return this.http.get<IThread[]>(environment.baseUrl + `User/getFavouriteThreads${id}`);
+    return this.http.get<IThread[]>(this.url + `User/getFavouriteThreads${id}`);
   }
 
   getUserThreads(id: number): Observable<IThread[]>{
-    return this.http.get<IThread[]>(environment.baseUrl + `User/getThreads${id}`);
+    return this.http.get<IThread[]>(this.url + `User/getThreads${id}`);
   }
 
   getUserComments(id: number): Observable<UserComment[]>{
-    return this.http.get<UserComment[]>(environment.baseUrl + `User/getComments${id}`);
+    return this.http.get<UserComment[]>(this.url + `User/getComments${id}`);
   }
 
   getFollowers(id: number): Observable<IUser[]>{
-    return this.http.get<IUser[]>(environment.baseUrl + `User/getFollowers${id}`);
+    return this.http.get<IUser[]>(this.url + `User/getFollowers${id}`);
   }
 
   getFollowing(id: number): Observable<IUser[]>{
-    return this.http.get<IUser[]>(environment.baseUrl + `User/getFollowing${id}`);
+    return this.http.get<IUser[]>(this.url + `User/getFollowing${id}`);
   }
 
   createFollower(follower: FollowerDto){
-    return this.http.post(environment.baseUrl + 'User/createFollower', follower, {responseType: 'text'}).subscribe();
+    return this.http.post(this.url + 'User/createFollower', follower, {responseType: 'text'}).subscribe();
   }
   deleteFollower(follower: FollowerDto){
-    return this.http.delete(environment.baseUrl + 'User/deleteFollower', {responseType: 'text', body: follower}).subscribe();
+    return this.http.delete(this.url + 'User/deleteFollower', {responseType: 'text', body: follower}).subscribe();
   }
 
   // Signals
