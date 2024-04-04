@@ -18,19 +18,6 @@ export class CategoryListComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.getUser();
-
-    // Make sure to remove Other category
-
-    console.log(this.categories)
-
-    var other = this.categories?.find(c => c.name == 'Other');
-    if(other == null)
-      return;
-
-    this.categories?.splice(this.categories?.indexOf(other, 1));
-
-    if(this.popular?.find(c => c == other))
-      this.popular.splice(this.popular.indexOf(other, 1));
   }
 
   navigateToCategory(category: ICategory){

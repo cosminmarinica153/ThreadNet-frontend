@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/thread-net",
+    "public": "dist/thread-net/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -9,7 +9,7 @@
     "rewrites": [
       {
         "source": "**",
-        "destination": "/browser/index.html"
+        "destination": "/index.html"
       }
     ]
   }

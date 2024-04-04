@@ -11,7 +11,7 @@
           [voteData]="{ contentType: 'thread', contentId: thread.id }"
           [condition]="isFavourite(thread.id)"
         ></app-favourite-btn>
-        <h2 *ngIf="!isEditing" class="text-2xl cursor-pointer leading-snug font-extrabold text-gray-50 truncate mb-1 sm:mb-0" (click)="navigateToThread()"> {{thread.title}} </h2>
+        <h2 *ngIf="!isEditing" class="sm:max-w-20 lg:max-w-64 text-2xl cursor-pointer leading-snug font-extrabold text-gray-50 truncate mb-1 sm:mb-0" (click)="navigateToThread()"> {{thread.title}} </h2>
         <textarea *ngIf="isEditing"
                   class="text-2xl w-full leading-snug italic font-extrabold text-gray-200
                          bg-transparent truncate mb-1 sm:mb-0 resize-none border-b-2 border-white" rows="1"
@@ -37,7 +37,7 @@
     <div class="flex items-end justify-between whitespace-normal">
       <!-- Paragraph -->
       <div class="w-full text-indigo-100 max-h-[4.5rem] line-clamp-3 overflow-hidden flex flex-row justify-between items-center">
-        <p *ngIf="!isEditing" class="mb-2 flex-grow cursor-pointer" (click)="navigateToThread()"> {{thread.content}} </p>
+        <p *ngIf="!isEditing" appTruncate class="mb-2 flex-grow cursor-pointer overflow-ellipsis" (click)="navigateToThread()"> {{thread.content}} </p>
         <textarea *ngIf="isEditing"
                   class="mb-2 w-full flex-grow italic text-gray-200 bg-transparent resize-none border-b-2 border-white" rows="1"
                   formControlName="content"> {{thread.content}} </textarea>

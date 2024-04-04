@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 export class CreateThreadComponent implements OnInit {
 @Input() categoryOptions: ICategory[] | null = [];
 @Output() close = new EventEmitter<any>();
-@Input() preset: ICategory = { id: 2, name: 'Other'};
+@Input() preset: ICategory = { id: 14, name: 'Other'};
 
   submit: boolean = false;
   threadForm!: FormGroup;
@@ -41,14 +41,10 @@ export class CreateThreadComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(window.history.state.categoryData)
-      this.preset = window.history.state.categoryData;
-
     let user = this.authService.getUser();
     if(user)
       this.userId = user.id;
 
-    console.log(this.preset);
     this.createForm();
   }
 

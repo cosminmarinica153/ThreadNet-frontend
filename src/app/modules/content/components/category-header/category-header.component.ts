@@ -11,8 +11,9 @@ import { InteractionService } from '../../services/interaction.service';
   styleUrls: ['./category-header.component.css']
 })
 export class CategoryHeaderComponent implements OnInit {
-  @Input() category!: ICategory;
+  @Input() category: ICategory = { id: 14, name: 'Other'} ;
   @Input() categories: ICategory[] | null= [];
+  @Input() title: string = 'Home';
   choice: string = '';
 
   @Output() search = new EventEmitter<any>();
@@ -24,6 +25,7 @@ export class CategoryHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.categories?.push({ id: 14, name: 'Other'});
   }
 
   handleChoice(event: any){

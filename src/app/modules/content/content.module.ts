@@ -22,6 +22,7 @@ import { CommentReplyComponent } from './components/comment-reply/comment-reply.
 import { UserCommentComponent } from './components/user-comment/user-comment.component';
 import { UserContentComponent } from './components/user-content/user-content.component';
 import { SearchPipe } from './pipes/search.pipe';
+import { TruncateDirective } from './directives/truncate.directive';
 
 @NgModule({
   imports: [
@@ -52,7 +53,8 @@ import { SearchPipe } from './pipes/search.pipe';
     CreateCommentComponent,
     CreateReplyComponent,
 
-    SearchPipe
+    SearchPipe,
+    TruncateDirective
   ],
   exports: [
     ThreadComponent,

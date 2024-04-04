@@ -31,13 +31,25 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.user = this.authService.getUser();
 
-    this.categoryService.getAll().pipe(
-      tap(data => this.categories = of(data))
-    ).subscribe();
+    this.categoryService.getAll().subscribe({
+      next: data => {
+        var other = data.find(c => c.name == 'Other');
+        if(other != null)
+          data.splice(data.indexOf(other), 1);
 
-    this.categoryService.getPopular(5).pipe(
-      tap(data => this.popular = of(data))
-    ).subscribe();
+        this.categories = of(data)
+      }
+    })
+
+    this.categoryService.getPopular(5).subscribe({
+      next: data => {
+        var other = data.find(c => c.name == 'Other');
+        if(other != null)
+          data.splice(data.indexOf(other), 1);
+
+        this.popular = of(data)
+      }
+    })
   }
 
   setSearch(event: any){

@@ -40,19 +40,29 @@ export class CategoryPageComponent implements OnInit {
       }
     })
 
-
     this.userInteractions = interactionService.getUserInteractions();
-
-    this.categoryService.getAll().pipe(
-      tap(data => this.categories = of(data))
-    ).subscribe();
-
-    this.categoryService.getPopular(5).pipe(
-        tap(data => this.popular = of(data))
-    ).subscribe();
   }
 
   ngOnInit() {
+    this.categoryService.getAll().subscribe({
+      next: data => {
+        var other = data.find(c => c.name == 'Other');
+        if(other != null)
+          data.splice(data.indexOf(other), 1);
+
+        this.categories = of(data)
+      }
+    })
+
+    this.categoryService.getPopular(5).subscribe({
+      next: data => {
+        var other = data.find(c => c.name == 'Other');
+        if(other != null)
+          data.splice(data.indexOf(other), 1);
+
+        this.popular = of(data)
+      }
+    })
   }
 
   setSearch(event: any){
