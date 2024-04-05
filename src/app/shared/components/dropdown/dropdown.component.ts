@@ -51,7 +51,7 @@ export class DropdownComponent implements OnInit {
     var user = this.authService.getUser();
     if(user == undefined) return;
 
-    this.router.navigate(['user', user.username], { state: { userData: user } })
+    this.router.navigate(['user', user.id, user.username])
   }
 
   @HostListener('document:click', ['$event'])

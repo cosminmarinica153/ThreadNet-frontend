@@ -39,7 +39,7 @@
             <span *ngIf="!password.valid && password.touched" class="text-red-600"> Password required </span>
           </div>
         </div>
-        <span *ngIf="loginForm.hasError('notFound')" class="text-red-600"> Account not Found </span>
+        <span *ngIf="loginForm.hasError('notFound')" class="text-red-600"> Wrong username or password.  </span>
         <div class="mt-6">
           <span class="block w-full rounded-md">
             <button type="submit" (click)="submit = true"

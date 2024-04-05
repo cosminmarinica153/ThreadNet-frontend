@@ -39,9 +39,9 @@ constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: O
     );
   }
 
-  registerUser(userData: CreateUserDto): Observable<boolean>{
-    return this.http.post(this.url + 'User/createUser', userData, { responseType: 'text' }).pipe(
-      map(data => {return data != null}),
+  registerUser(userData: CreateUserDto): Observable<IUser>{
+    return this.http.post<IUser>(this.url + 'User/createUser', userData).pipe(
+      map(data => {return data }),
       catchError(error => {
         if(error.status === 404)
           return throwError(() => new Error('Username already taken'));

@@ -64,10 +64,12 @@ export class RegisterComponent implements OnInit {
     }
 
     this.authService.registerUser(this.userData()).subscribe({
-      next: success => {
-        if(success){
+      next: userData => {
+        if(userData){
           this.submit = false;
-          this.router.navigate(['/']);
+          this.authService.setUser(userData).subscribe({
+            next: () => this.router.navigate(['user', userData.id, userData.username]).then(() => window.location.reload())
+          });
         }
       },
       error: error => {
